@@ -1,0 +1,12 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+}
+.input {
+  margin-bottom: 5px;
+}
+
+.label {
+  margin-bottom: 5px;
+}

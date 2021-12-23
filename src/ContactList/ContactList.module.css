@@ -1,0 +1,9 @@
+.list {
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+}
+
+.list:not(:last-child) {
+  margin-bottom: 5px;
+}
