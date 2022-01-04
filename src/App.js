@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { nanoid } from 'nanoid';
 
 import ContactForm from './ContactForm';
 import Section from './Section';
@@ -13,16 +14,34 @@ class App extends Component {
     filter: '',
   };
 
-  filterContacts = text =>
-    this.state.contacts.filter(contact => contact.name.toUpperCase().includes(text.toUpperCase()));
+  isContactExist(name) {
+    return !!this.state.contacts.find(contact =>
+      contact.name.toUpperCase().includes(name.toUpperCase()),
+    );
+  }
+
+  filterContacts(text) {
+    return this.state.contacts.filter(contact =>
+      contact.name.toUpperCase().includes(text.toUpperCase()),
+    );
+  }
 
   handleDelete = event => {
     const newContacts = this.state.contacts.filter(contact => contact.id !== event.target.id);
 
-    this.setState(() => ({ contacts: newContacts, filter: '' }));
+    this.setState({ contacts: newContacts, filter: '' });
   };
 
-  addContact = ({ id, name, number }) => {
+  //Обработчик события
+  addContact = (name, number) => {
+    if (this.isContactExist(name)) {
+      alert(`${name} is already in contacts!`);
+
+      return;
+    }
+
+    const id = nanoid();
+
     this.setState(prevstate => ({
       contacts: [...prevstate.contacts, { id, name, number }],
       filter: '',
@@ -40,16 +59,17 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate() {
-    // console.log('Hallo!');
-    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  componentDidUpdate(prevprops, prevState) {
+    if (prevState.contacts.length !== this.state.contacts.length) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
   }
 
   render() {
     return (
       <>
         <Section title="Phonebook">
-          <ContactForm onFormSubmit={this.addContact} contacts={this.state.contacts} />
+          <ContactForm onFormSubmit={this.addContact} />
         </Section>
         <Section title="Contacts">
           <InputElement
@@ -61,6 +81,7 @@ class App extends Component {
             onChange={this.handleChange}
           />
           <ContactList
+            name={this.state.name}
             contacts={this.filterContacts(this.state.filter)}
             onClick={this.handleDelete}
           />

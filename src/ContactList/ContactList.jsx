@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from '../Button';
 import styles from './ContactList.module.css';
 
-const ContactList = ({ contacts, onClick }) => {
+const ContactList = ({ contacts, name, onClick }) => {
   if (!contacts.length) {
     return null;
   }
@@ -15,6 +15,8 @@ const ContactList = ({ contacts, onClick }) => {
       </li>
     );
   });
+
+  //===============================return=================================
   return <ul>{elements}</ul>;
 };
 
