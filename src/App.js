@@ -16,15 +16,15 @@ function App() {
     return !!contacts.find(contact => contact.name.toUpperCase().includes(name.toUpperCase()));
   }
 
-  function filterContacts(text) {
-    return contacts.filter(contact => contact.name.toUpperCase().includes(text.toUpperCase()));
+  function filterContacts() {
+    return contacts.filter(contact => contact.name.toUpperCase().includes(filter.toUpperCase()));
   }
 
-  const handleDelete = event => {
-    const newContacts = contacts.filter(contact => contact.id !== event.target.id);
+  const handleDelete = id => {
+    const newContacts = contacts.filter(contact => contact.id !== id);
 
     setContacts(newContacts);
-    setFilter('');
+    // setFilter('');
   };
 
   //Обработчик события
@@ -70,7 +70,7 @@ function App() {
           text="Find contacts by name"
           onChange={handleChange}
         />
-        <ContactList contacts={filterContacts(filter)} onClick={handleDelete} />
+        <ContactList contacts={filterContacts()} onClick={handleDelete} />
       </Section>
     </>
   );

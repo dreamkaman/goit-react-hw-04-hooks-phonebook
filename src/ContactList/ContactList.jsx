@@ -11,7 +11,7 @@ const ContactList = ({ contacts, onClick }) => {
   const elements = contacts.map(({ name, id, number }) => {
     return (
       <li key={id} className={styles.list}>
-        {name}: {number} <Button id={id} type="button" text="Delete" onClick={onClick} />
+        {name}: {number} <Button type="button" text="Delete" onClick={() => onClick(id)} />
       </li>
     );
   });

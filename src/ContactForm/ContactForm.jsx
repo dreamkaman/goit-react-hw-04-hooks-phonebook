@@ -7,43 +7,19 @@ import Button from '../Button';
 import styles from './ContactForm.module.css';
 
 function ContactForm({ onFormSubmit }) {
-  // state = {
-  //   name: '',
-  //   number: '',
-  // };
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [contacts, setContacts] = useState({ name: '', number: '' });
 
-  function resetFormState() {
-    // this.setState({
-    //   name: '',
-    //   number: '',
-    // });
-    setName('');
-    setNumber('');
-  }
+  const { name, number } = contacts;
 
   const handleChange = event => {
     const key = event.target.name;
-    // this.setState({
-    //   [key]: event.target.value,
-    // });
-    switch (key) {
-      case 'name':
-        setName(event.target.value);
-        break;
-      case 'number':
-        setNumber(event.target.value);
-        break;
-      default:
-        return;
-    }
+    setContacts(prevstate => ({ ...prevstate, [key]: event.target.value }));
   };
 
   const handleSubmit = event => {
     event.preventDefault();
     onFormSubmit(name, number);
-    resetFormState();
+    setContacts({ name: '', number: '' });
   };
 
   return (
